@@ -1,23 +1,43 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int score=0;
+    public int coins=0;
+    
+
+    private void Awake()
     {
+        coins = PlayerPrefs.GetInt("coins");
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
+        Actions.OnScoreNeed += AddScore;
+    }
+
+    private void OnDisable()
+    {
+        Actions.OnScoreNeed -= AddScore;
+    }
+
+    public void AddScore(float scoreAmount)
+    {
+        score += (int)scoreAmount;
+        Actions.SetScoreText(score);
+        AddCoins(score);
         
     }
 
-    public void AddScore()
+    public void AddCoins(int amount)
     {
-        
+        coins += amount;
+        //PlayerPrefs.SetInt("Coins" , coins);
+        Actions.SetCoinsText(coins);
+       
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+    // interface yap
     public float heightCount;
     private void OnTriggerEnter(Collider other)
     {

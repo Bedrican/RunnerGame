@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     
     void Start()
     {
+        Actions.OnPowerUp += PowerUp;
         _playerSpeed = _playerPrefs.playerForwardSpeed;
         _playerDragSpeed = _playerPrefs.playerDragSpeed;
         
@@ -26,6 +27,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         Move();
+       
     }
 
     private void Move()
@@ -46,5 +48,18 @@ public class Movement : MonoBehaviour
         _xPos = Mathf.Clamp(position.x, -3.5f, 3.5f);
         position = new Vector3(_xPos, position.y, position.z);
         transform.position = position;
+    }
+
+
+    public void PowerUp()
+    {
+        StartCoroutine(PowerUps());
+    }
+
+    IEnumerator PowerUps()
+    {
+        _playerSpeed += 10;
+        yield return new WaitForSeconds(5f);
+        _playerSpeed -= 10;
     }
 }

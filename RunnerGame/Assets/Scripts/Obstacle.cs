@@ -12,6 +12,7 @@ public class Obstacle : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Actions.OnHeightChanged(heightCount);
+            this.gameObject.SetActive(false);
         }
     }
 }

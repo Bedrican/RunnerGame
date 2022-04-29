@@ -11,8 +11,8 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        coins = PlayerPrefs.GetInt("coins");
-        
+        coins = PlayerPrefs.GetInt("Coins");
+        Actions.SetCoinsText(coins);
     }
 
     private void OnEnable()
@@ -36,7 +36,7 @@ public class ScoreManager : MonoBehaviour
     public void AddCoins(int amount)
     {
         coins += amount;
-        //PlayerPrefs.SetInt("Coins" , coins);
+        PlayerPrefs.SetInt("Coins" , coins);
         Actions.SetCoinsText(coins);
        
     }

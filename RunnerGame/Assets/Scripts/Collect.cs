@@ -14,6 +14,7 @@ public class Collect : MonoBehaviour
         {
             Debug.Log("aaa");
             Actions.OnHeightChanged(0.25f);
+            this.gameObject.SetActive(false);
         }
     }
 }

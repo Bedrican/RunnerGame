@@ -12,7 +12,7 @@ public class CharacterPosition : MonoBehaviour
 
     private void OnDisable()
     {
-        Actions.OnHeightChanged += RepositionCharacter;
+        Actions.OnHeightChanged -= RepositionCharacter;
     }
 
     public void RepositionCharacter(float amount)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class Movement : MonoBehaviour
     [SerializeField]private PlayerDataPrefs _playerPrefs;
     private float _playerSpeed;
     private float _playerDragSpeed;
+    private bool isGameFinish;
     private Camera _camera;
     private Vector3 _firstPos;
     private Vector3 _endPos;
@@ -17,16 +19,33 @@ public class Movement : MonoBehaviour
     
     void Start()
     {
-        Actions.OnPowerUp += PowerUp;
+        
         _playerSpeed = _playerPrefs.playerForwardSpeed;
         _playerDragSpeed = _playerPrefs.playerDragSpeed;
         
     }
 
+    private void OnEnable()
+    {
+        Actions.OnPowerUp += PowerUp;
+        Actions.OnGameFinish += IsGameFinish;
+    }
+
+    private void OnDisable()
+    {
+        Actions.OnPowerUp -= PowerUp;
+        Actions.OnGameFinish -= IsGameFinish;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (isGameFinish == false)
+        {
+            Move();
+        }
+        
+        
        
     }
 
@@ -61,5 +80,10 @@ public class Movement : MonoBehaviour
         _playerSpeed += 10;
         yield return new WaitForSeconds(5f);
         _playerSpeed -= 10;
+    }
+
+    public void IsGameFinish()
+    {
+        isGameFinish = true;
     }
 }

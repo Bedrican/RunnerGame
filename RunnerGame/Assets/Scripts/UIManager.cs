@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,16 +19,30 @@ public class UIManager : MonoBehaviour
     public int level=1;
     void Start()
     {
-        Actions.OnGameOver += GameOver;
-        Actions.OnGameFinish += GameFinish;
-        Actions.SetScoreText += SetScoreText;
-        Actions.SetCoinsText += SetCoinsText;
-        //level = PlayerPrefs.GetInt("Level");
+        
+        level = PlayerPrefs.GetInt("Level");
+        SetLevelText();
         Time.timeScale = 0;
         MainMenuUI.SetActive(true);
         LevelAndCoinUI.SetActive(true);
         FailMenuUI.SetActive(false);
         FinishUI.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        Actions.OnGameOver += GameOver;
+        Actions.OnGameFinish += GameFinish;
+        Actions.SetScoreText += SetScoreText;
+        Actions.SetCoinsText += SetCoinsText;
+    }
+
+    private void OnDisable()
+    {
+        Actions.OnGameOver -= GameOver;
+        Actions.OnGameFinish -= GameFinish;
+        Actions.SetScoreText -= SetScoreText;
+        Actions.SetCoinsText -= SetCoinsText;
     }
 
     // Update is called once per frame
@@ -44,7 +59,6 @@ public class UIManager : MonoBehaviour
 
     public void GameFinish()
     {
-        Time.timeScale = 0;
         FinishUI.SetActive(true);
         HUD.SetActive(false);
     }
@@ -70,8 +84,8 @@ public class UIManager : MonoBehaviour
     public void OnContinueButtonPressed()
     {
         level++;
-        //PlayerPrefs.SetInt("Level",level);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1 % 2);
+        PlayerPrefs.SetInt("Level",level);
+        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % 2);
     }
 
     public void SetScoreText(int score)

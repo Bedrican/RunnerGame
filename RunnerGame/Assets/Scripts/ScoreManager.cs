@@ -11,7 +11,13 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
+        
         coins = PlayerPrefs.GetInt("Coins");
+        
+    }
+
+    private void Start()
+    {
         Actions.SetCoinsText(coins);
     }
 
